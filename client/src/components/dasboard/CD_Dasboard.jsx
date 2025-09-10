@@ -1,5 +1,5 @@
 import React from 'react'
-import CDT_Proyek from './Tabel/CDT_Proyek';
+import CDT_Proyek from '../tabel/CDT_Proyek';
 import { IoLogOutOutline } from "react-icons/io5";
 
 
@@ -28,7 +28,7 @@ const CD_Dasboard = () => {
       </div>
 
       {/* Tabel Proyek */}
-   
+      <CDT_Proyek />
     </div>
 
   )
