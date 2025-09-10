@@ -1,7 +1,6 @@
 import React from 'react'
 import { BiDetail } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
-
 import CDI_Proyek from '../input/CDI_Proyek';
 
 const CDT_Proyek = () => {

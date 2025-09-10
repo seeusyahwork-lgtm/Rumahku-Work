@@ -1,34 +1,36 @@
 import React from 'react'
-import CTD_Proyek from "./tabel/CDT_Proyek";
+import CDT_Proyek from './Tabel/CDT_Proyek';
 import { IoLogOutOutline } from "react-icons/io5";
 
 
 const CD_Dasboard = () => {
   return (
-    <div className='container max-h-[calc(100vh-32px)]'>
-    <div className='border-b  mb-4 mt-2 pb-4 border-stone-300 shadow h-auto text-black' >
-      <div className="w-full border-b px-4 ml-5 mb-4 mt-2 pb-4 border-stone-300">
-        <div className="flex justify-between p-0.5">
+    <div className="container min-h-screen">
+      <div className="border-b shadow mb-4 mt-2 pb-4 border-stone-300">
+        {/* Header */}
+        <div className="flex justify-between items-center px-4 py-2">
           <div>
-            <span className="text-sm font-bold block">hii, selamat datang </span>
+            <span className="text-sm font-bold block">Hi, selamat datang</span>
             <span className="text-xs block text-stone-500">
-              {" "}
-              Jumat, agustus 6th 2025
+              {new Date().toLocaleDateString("id-ID", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+              })}
             </span>
           </div>
-          <div className="place-self-end">
-            <button className="btn btn-soft btn-secondary">
-              {" "}
-              <IoLogOutOutline />
-              Logout
-            </button>
-          </div>
+          <button className="btn btn-outline btn-secondary">
+            <IoLogOutOutline />
+            Logout
+          </button>
         </div>
       </div>
 
-      <CTD_Proyek />
+      {/* Tabel Proyek */}
+   
     </div>
-    </div>
+
   )
 }
 
