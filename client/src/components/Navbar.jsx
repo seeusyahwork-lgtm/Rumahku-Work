@@ -1,6 +1,6 @@
 import React from 'react'
 import { TbLogin2 } from "react-icons/tb";
-
+import Logo from "../assets/rumahku-kontruksi-high-resolution-logo-transparent.png"
 const Navbar = () => {
   return (
     <nav className="navbar fixed bg-white shadow-sm z-10">
@@ -36,16 +36,14 @@ const Navbar = () => {
             <li>
               <a>About</a>
             </li>
-            <li>
-              <a>Footer</a>
-            </li>
           </ul>
         </div>
       </div>
       <div className="navbar-center">
         <img
           className="w-35"
-          src="../assets/RKK-logo.png"
+          src={Logo}
+          alt="Logo Rumahku Kontraktor"  
         />
       </div>
       <div className="navbar-end">
