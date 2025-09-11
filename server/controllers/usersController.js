@@ -1,19 +1,24 @@
 // controllers/usersController.js
 
 // Import named function dari model
-import { getAllUsers as getAllUsersModel, createNewUser as createNewUserModel } from '../models/usersModel.js';
+import { 
+    getAllUsers as getAllUsersModel, 
+    createNewUser as createNewUserModel, 
+    updateUserById as updateUserByIdModel,
+    deleteUserById as deleteUserByIdModel // 🆕 import fungsi delete
+} from '../models/usersModel.js';
 
 // GET: Ambil semua user
 const getAllUsers = async (req, res) => {
     try {
         const data = await getAllUsersModel();
         res.json({
-            message: 'controller/usersController.js GET all users success',
+            message: 'controllers/usersController.js GET all users success',
             data: data
         });
     } catch (error) {
         res.status(500).json({
-            message: '/controller/usersController.js GET all users failed Internal Server Error',
+            message: 'controllers/usersController.js GET all users failed',
             error: error.message,
         });
     }
@@ -23,7 +28,7 @@ const getAllUsers = async (req, res) => {
 const createNewUser = async (req, res) => {
     try {
         const newUser = await createNewUserModel(req.body);
-        res.json({
+        res.status(201).json({
             message: 'controllers/usersController.js CREATE new user success',
             data: newUser
         });
@@ -35,28 +40,43 @@ const createNewUser = async (req, res) => {
     }
 };
 
-// PUT: Update user
-const updateUser = (req, res) => {
+// PATCH: Update user berdasarkan id
+const updateUser = async (req, res) => {
     const { id } = req.params;
-    res.json({
-        message: '/Controller UPDATE user success',
-        id: id,
-        data: req.body
-    });
+    try {
+        const updatedUser = await updateUserByIdModel(id, req.body);
+        res.json({
+            message: 'controllers/usersController.js UPDATE user success',
+            data: updatedUser
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'controllers/usersController.js UPDATE user failed',
+            error: error.message
+        });
+    }
 };
 
-// DELETE: Hapus user
-const deleteUser = (req, res) => {
+// DELETE: Hapus user berdasarkan id
+const deleteUser = async (req, res) => {
     const { id } = req.params;
-    res.json({
-        message: '/Controller DELETE user success',
-        data: {
-            id: id,
-            name: 'Suparno',
-            email: 'Suparno@gmail.com',
-            address: 'Banyuwangi'
+    try {
+        const deletedUser = await deleteUserByIdModel(id);
+        if (deletedUser.length === 0) {
+            return res.status(404).json({
+                message: `User dengan id ${id} tidak ditemukan`
+            });
         }
-    });
+        res.json({
+            message: 'controllers/usersController.js DELETE user success',
+            data: deletedUser
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'controllers/usersController.js DELETE user failed',
+            error: error.message
+        });
+    }
 };
 
 // Export semua controller
