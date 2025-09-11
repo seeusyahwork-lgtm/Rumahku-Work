@@ -1,34 +1,37 @@
 //index.js
 
+
+// Pemanggilan fungsi
 const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const pool = require('./db'); // Import koneksi database
+const pool = require('./config/db'); // Import koneksi database
 
-// Middleware parsing JSON
+// Menanggil route
+const usersRoutes = require('./routes/users');
+
+// Memanggil Middleware 
+const logReqest = require('./middlewares/logs');
+
+// Penutupan Pemanggilan Fungsi
+
+
+
+
+
+// Jalankan logs yang ada di middleware 
+app.use(logReqest);
+
+// Middleware Pengijinan JSON
 app.use(express.json());
 
-// Route utama
-// app.get('/', (req, res) => {
-//   res.send('Server berjalan');
-// });
 
-// Route untuk cek koneksi database
-app.get('/cekkoneksi', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT NOW()');
-    res.json({
-      status: 'Berhasil terhubung ke database ✅',
-      waktu_server_db: result.rows[0].now
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'Gagal terhubung ke database ❌',
-      error: error.message
-    });
-  }
-});
+// Jalankan route
+app.use('/users', usersRoutes);
+
+
+
 
 // Jalankan server
 app.listen(PORT, () => {
@@ -37,13 +40,4 @@ app.listen(PORT, () => {
 
 
 
-// app.method(path, handler);
-
-app.get('/',(req, res) => {
-    res.send('hello get Method');
-});
-
-app.post('/',(req, res) => {
-    res.send('hello post Method');
-});
 
