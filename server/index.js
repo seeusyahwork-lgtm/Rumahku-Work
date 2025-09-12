@@ -7,6 +7,7 @@ import mandorRoutes from './routes/mandor.js'; // import route mandor
 import pengawasRoutes from './routes/pengawas.js'; // import route pengawas
 import proyekRoutes from './routes/proyek.js'; // import route pengawas
 import progresRoutes from './routes/progres.js'; // import route progres
+import loginRoutes from './routes/login.js'; // import route progres
 import logReqest from './middlewares/logs.js';     // import middleware logging
 
 // Buat instance Express
@@ -48,6 +49,8 @@ app.use('/pengawas', pengawasRoutes);
 app.use('/proyek', proyekRoutes);
 // Route untuk /progres
 app.use('/progres', progresRoutes);
+// Route untuk /login
+app.use('/login', loginRoutes);
 
 
 
