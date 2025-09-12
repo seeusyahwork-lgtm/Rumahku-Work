@@ -1,92 +1,83 @@
-// CDT_Proyek.jsx
+// CDT_Progres.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BiDetail } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
-import CDI_Proyek from "../input/CDI_Proyek";
+import CDI_Progres from "../input/CDI_Progres.jsx";
 
-const CDT_Proyek = () => {
-  const [proyek, setProyek] = useState([]);
+const CDT_Progres = () => {
+  const [progres, setProgres] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProyek = async () => {
+    const fetchProgres = async () => {
       try {
         setLoading(true);
         setError(null);
-
-        const response = await axios.get("http://localhost:3000/proyek");
-        console.log("Data proyek:", response.data);
-
-        setProyek(response.data.data || []);
+        const response = await axios.get("http://localhost:3000/progres");
+        console.log("Data progres:", response.data);
+        setProgres(response.data.data || []);
       } catch (err) {
-        console.error("Error fetch proyek:", err);
-        setError("Gagal mengambil data proyek");
+        console.error("Error fetch progres:", err);
+        setError("Gagal mengambil data progres");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchProyek();
+    fetchProgres();
   }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Daftar Proyek</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Daftar Progres</h1>
 
-      {/* Search + Tombol Tambah Proyek */}
+      {/* Search + Tombol Tambah Progres */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <input
           type="text"
-          placeholder="Search proyek..."
+          placeholder="Search progres..."
           className="w-full md:w-1/3 px-4 py-2 mb-4 md:mb-0 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
+        {/* Tombol untuk buka modal */}
         <button
           className="btn flex items-center gap-2"
           onClick={() => document.getElementById("my_modal_3").showModal()}
         >
-          <FaPlus /> Tambah Proyek
+          <FaPlus /> Tambah Progres
         </button>
 
         {/* 
-          📌 Modal tambah proyek 
-          - Tambahkan class `w-3/4 max-w-3/4` agar lebar modal 75% layar
-          - `w-3/4` = lebar default modal 75% layar
-          - `max-w-3/4` = membatasi agar tidak melebihi 75% layar
+          Modal tambah progres
+          📌 Perubahan penting ada di className="modal-box ..." :
+          - Tambahkan max-w-3/4 agar lebar maksimal modal menjadi 75% layar
+          - Tambahkan w-3/4 agar lebar default modal 75% layar juga
         */}
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box w-3/4 max-w-3/4">
-            {/* Tombol close modal */}
+            {/* Tombol untuk menutup modal */}
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
             </form>
 
-            {/* Isi form tambah proyek */}
-            <CDI_Proyek />
+            {/* Isi form tambah progres */}
+            <CDI_Progres />
           </div>
         </dialog>
       </div>
 
-      {/* Tabel Proyek */}
+      {/* Tabel Progres */}
       <div className="overflow-x-auto bg-white rounded-lg shadow">
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm">
               <th className="py-3 px-6 text-left">No</th>
-              <th className="py-3 px-6 text-left">Nama Proyek</th>
-              <th className="py-3 px-6 text-left">Lokasi</th>
-              <th className="py-3 px-6 text-left">Tanggal Mulai</th>
-              <th className="py-3 px-6 text-left">Tanggal Selesai</th>
-              <th className="py-3 px-6 text-left">Status</th>
-              <th className="py-3 px-6 text-left">Mandor ID</th>
-              <th className="py-3 px-6 text-left">Pengawas ID</th>
-              <th className="py-3 px-6 text-left">Pemilik ID</th>
-              <th className="py-3 px-6 text-left">Anggaran</th>
-              <th className="py-3 px-6 text-left">Keterangan</th>
+              <th className="py-3 px-6 text-left">Proyek ID</th>
+              <th className="py-3 px-6 text-left">Tanggal</th>
+              <th className="py-3 px-6 text-left">Deskripsi</th>
               <th className="py-3 px-6 text-left">Foto</th>
               <th className="py-3 px-6 text-center">Aksi</th>
             </tr>
@@ -95,47 +86,36 @@ const CDT_Proyek = () => {
           <tbody className="text-gray-600 text-sm">
             {loading ? (
               <tr>
-                <td colSpan="13" className="text-center py-4">
+                <td colSpan="6" className="text-center py-4">
                   Loading...
                 </td>
               </tr>
             ) : error ? (
               <tr>
-                <td colSpan="13" className="text-center py-4 text-red-500">
+                <td colSpan="6" className="text-center py-4 text-red-500">
                   {error}
                 </td>
               </tr>
-            ) : proyek.length === 0 ? (
+            ) : progres.length === 0 ? (
               <tr>
-                <td colSpan="13" className="text-center py-4">
+                <td colSpan="6" className="text-center py-4">
                   Tidak ada data
                 </td>
               </tr>
             ) : (
-              proyek.map((p, index) => (
+              progres.map((p, index) => (
                 <tr
                   key={p.id || index}
                   className="border-b border-gray-200 hover:bg-gray-100"
                 >
                   <td className="py-3 px-6">{index + 1}</td>
-                  <td className="py-3 px-6">{p.nama_proyek || "—"}</td>
-                  <td className="py-3 px-6">{p.lokasi || "—"}</td>
+                  <td className="py-3 px-6">{p.proyek_id || "—"}</td>
                   <td className="py-3 px-6">
-                    {p.tanggal_mulai
-                      ? new Date(p.tanggal_mulai).toLocaleDateString()
+                    {p.tanggal
+                      ? new Date(p.tanggal).toLocaleDateString()
                       : "—"}
                   </td>
-                  <td className="py-3 px-6">
-                    {p.tanggal_selesai
-                      ? new Date(p.tanggal_selesai).toLocaleDateString()
-                      : "—"}
-                  </td>
-                  <td className="py-3 px-6">{p.status || "—"}</td>
-                  <td className="py-3 px-6">{p.mandor_id || "—"}</td>
-                  <td className="py-3 px-6">{p.pengawas_id || "—"}</td>
-                  <td className="py-3 px-6">{p.pemilik_id || "—"}</td>
-                  <td className="py-3 px-6">{p.anggaran || "—"}</td>
-                  <td className="py-3 px-6">{p.keterangan || "—"}</td>
+                  <td className="py-3 px-6">{p.deskripsi || "—"}</td>
                   <td className="py-3 px-6">{p.foto || "—"}</td>
                   <td className="py-3 px-6 text-center">
                     <div className="flex item-center justify-center">
@@ -185,4 +165,4 @@ const CDT_Proyek = () => {
   );
 };
 
-export default CDT_Proyek;
+export default CDT_Progres;

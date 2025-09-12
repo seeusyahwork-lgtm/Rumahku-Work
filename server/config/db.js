@@ -1,16 +1,13 @@
-// db.js
-const { Pool } = require('pg');
+// config/db.js
+import pkg from 'pg';
+const { Pool } = pkg;
 
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'db_rumahku',
   password: 'qwerty123',
-  port: 5432,
+  port: 5432
 });
 
-pool.connect()
-  .then(() => console.log('Connected to PostgreSQL ✅'))
-  .catch(err => console.error('Connection error', err.stack));
-
-module.exports = pool;
+export default pool; // ✅ default export
